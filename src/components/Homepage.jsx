@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Homepage = () => {
   const text = "Hello, I'm Abdur Rehman Malik";
@@ -65,13 +66,17 @@ const Homepage = () => {
           applications that ensure a seamless experience for users.
         </p>
         <div className="flex gap-4 w-full sm:items-center">
-          <button className="px-6 py-3 rounded-3xl bg-black text-white font-medium shadow-md hover:bg-gray-900 hover:scale-105 transform transition-all duration-300 ease-in-out">
-            View My Project
-          </button>
+          <Link href="/portfolio">
+            <button className="px-6 py-3 rounded-3xl bg-black text-white font-medium shadow-md hover:bg-gray-900 hover:scale-105 transform transition-all duration-300 ease-in-out">
+              View My Project
+            </button>
+          </Link>
 
-          <button className="px-6 py-3 rounded-3xl border-2 border-black text-black font-medium hover:bg-black hover:text-white hover:scale-105 transform transition-all duration-300 ease-in-out">
-            Contact Me
-          </button>
+          <Link href="/contact">
+            <button className="px-6 py-3 rounded-3xl border-2 border-black text-black font-medium hover:bg-black hover:text-white hover:scale-105 transform transition-all duration-300 ease-in-out">
+              Contact Me
+            </button>
+          </Link>
         </div>
       </div>
     </div>

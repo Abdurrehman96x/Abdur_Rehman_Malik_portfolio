@@ -4,6 +4,27 @@ import Brain from "@/components/brain";
 import { motion, useScroll } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
+import {
+  FaHtml5,
+  FaCss3Alt,
+  FaJs,
+  FaNodeJs,
+  FaReact,
+  FaPython,
+  FaGitAlt,
+} from "react-icons/fa";
+import {
+  SiExpress,
+  SiTailwindcss,
+  SiNextdotjs,
+  SiC,
+  SiCplusplus,
+  SiMongodb,
+  SiMysql,
+  SiPostman,
+  SiVercel,
+  SiFramer,
+} from "react-icons/si";
 
 const cardBase =
   "relative rounded-2xl border border-black/10 bg-white/70 backdrop-blur-md shadow-[0_20px_60px_-20px_rgba(0,0,0,0.2)] " +
@@ -34,6 +55,63 @@ const lineAnim = {
   transition: { duration: 0.6, ease: "easeOut" },
   viewport: { once: true, margin: "-100px" },
 };
+const skills = [
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "Node Js",
+  "Express JS",
+  "Tailwind",
+  "React",
+  "NEXT js",
+  "C",
+  "C++",
+  "Python",
+  "Framer Motion",
+  "MongoDB",
+  "MySQL",
+  "Git",
+  "Postman",
+  "Vercel",
+];
+const skillIcons = {
+  html: FaHtml5,
+  css: FaCss3Alt,
+  javascript: FaJs,
+  "node js": FaNodeJs,
+  express: SiExpress,
+  "express js": SiExpress,
+  tailwind: SiTailwindcss,
+  react: FaReact,
+  "next js": SiNextdotjs,
+  c: SiC,
+  "c++": SiCplusplus,
+  python: FaPython,
+  "framer motion": SiFramer,
+  mongodb: SiMongodb,
+  mysql: SiMysql,
+  git: FaGitAlt,
+  postman: SiPostman,
+  vercel: SiVercel,
+};
+
+const SkillPill = ({ label }) => (
+  <span
+    className="
+      group inline-flex items-center gap-2 rounded-xl text-sm px-3 py-2
+      cursor-default text-white bg-black/90 border border-black/10
+      hover:bg-white hover:text-black transition-all duration-200
+      shadow-[0_6px_18px_-6px_rgba(0,0,0,0.3)] hover:-translate-y-0.5
+    "
+    title={label}
+    aria-label={label}
+  >
+    <span className="inline-flex items-center justify-center w-5 h-5">
+      <SkillIcon name={label} />
+    </span>
+    {label}
+  </span>
+);
 
 export default function AboutPage() {
   const containerRef = useRef(null);
@@ -71,7 +149,7 @@ export default function AboutPage() {
             {/* Signature PNG */}
             <div className="pt-2">
               <Image
-                src="/sign.png" 
+                src="/sign.png"
                 alt="Signature of Abdur Rehman Malik"
                 width={250}
                 height={150}
@@ -112,29 +190,77 @@ export default function AboutPage() {
               SKILLS
             </motion.h2>
 
-            <motion.div {...blockAnim} className="flex gap-3 flex-wrap">
-              {[
-                "HTML",
-                "CSS",
-                "JavaScript",
-                "Node Js",
-                "Express JS",
-                "Tailwind",
-                "React",
-                "NEXT js",
-                "C",
-                "C++",
-                "Framer Motion",
-                "MongoDB",
-              ].map((s) => (
-                <span
-                  key={s}
-                  className="rounded-lg text-sm px-3 py-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white border border-black/10 transition-colors"
+            {/* variants local to this section */}
+            {(() => {
+              const container = {
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.05, delayChildren: 0.05 },
+                },
+              };
+
+              const pill = {
+                hidden: { opacity: 0, y: 10, scale: 0.98, rotate: -2 },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  rotate: 0,
+                  transition: { type: "spring", stiffness: 280, damping: 18 },
+                },
+              };
+
+              return (
+                <motion.div
+                  variants={container}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, margin: "-120px" }}
+                  className="flex gap-3 flex-wrap"
                 >
-                  {s}
-                </span>
-              ))}
-            </motion.div>
+                  {skills.map((skill) => {
+                    const Icon = skillIcons[skill.toLowerCase()];
+                    return (
+                      <motion.span
+                        key={skill}
+                        variants={pill}
+                        whileHover={{ y: -3, scale: 1.04, rotate: -1 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="relative rounded-lg text-sm px-3 py-2 flex items-center gap-2 cursor-pointer
+                         text-white bg-black border border-black/10 transition-all duration-200
+                         shadow-[0_8px_22px_-10px_rgba(0,0,0,0.35)]"
+                      >
+                        {/* subtle shine on hover */}
+                        <span className="pointer-events-none absolute inset-0 rounded-lg overflow-hidden">
+                          <span className="absolute -inset-x-1 -top-1 h-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </span>
+
+                        {Icon && (
+                          <motion.span
+                            aria-hidden
+                            className="inline-flex"
+                            whileHover={{ rotate: -6 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 15,
+                            }}
+                          >
+                            <Icon size={16} />
+                          </motion.span>
+                        )}
+
+                        <span className="relative z-10">{skill}</span>
+
+                        {/* invert colors on hover */}
+                        <span className="absolute inset-0 rounded-lg pointer-events-none transition-colors duration-200 hover:bg-white/100 hover:text-black" />
+                      </motion.span>
+                    );
+                  })}
+                </motion.div>
+              );
+            })()}
           </section>
 
           {/* EDUCATION — Animated Timeline */}
