@@ -1,18 +1,43 @@
 "use client";
-import Brain from "@/components/brain";
-import { motion, useScroll, useInView } from "framer-motion";
-import Image from "next/image";
-import { useRef } from "react";
-const AboutPage = () => {
-  const containterRef = useRef();
-  const { scrollYProgress } = useScroll({ container: containterRef });
-  const skillRef = useRef();
-  const isSkillRefInView = useInView(skillRef, { margin: "-100px" });
 
-  const experienceRef = useRef();
-  const isExperienceRefInView = useInView(experienceRef, { margin: "-100px" });
-  const workRef = useRef();
-  const isWorkRefInView = useInView(workRef, { margin: "-100px" });
+import Brain from "@/components/brain";
+import { motion, useScroll } from "framer-motion";
+import { useRef } from "react";
+
+const cardBase =
+  "relative rounded-2xl border border-black/10 bg-white/70 backdrop-blur-md shadow-[0_20px_60px_-20px_rgba(0,0,0,0.2)] " +
+  "hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.35)] hover:-translate-y-0.5 transition-all duration-300";
+
+const badge =
+  "px-3 py-1 rounded-full text-xs font-semibold shadow-sm border border-black/10";
+
+const dot = (
+  <>
+    <span className="relative block w-6 h-6 rounded-full bg-white ring-4 ring-red-300 shadow-md shadow-red-300" />
+    <span className="absolute inset-0 rounded-full bg-red-300 opacity-60 animate-ping" />
+  </>
+);
+
+// Simple fade/lift for blocks as they enter
+const blockAnim = {
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.5, ease: "easeOut" },
+  viewport: { once: true, margin: "-100px" },
+};
+
+// Timeline grow (scaleY) animation
+const lineAnim = {
+  initial: { scaleY: 0 },
+  whileInView: { scaleY: 1 },
+  transition: { duration: 0.6, ease: "easeOut" },
+  viewport: { once: true, margin: "-100px" },
+};
+
+export default function AboutPage() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({ container: containerRef });
+
   return (
     <motion.div
       className="h-full"
@@ -20,15 +45,14 @@ const AboutPage = () => {
       animate={{ y: "0%" }}
       transition={{ duration: 1 }}
     >
-      {/*Containter */}
       <div
-        className="h-full overflow-auto lg:flex no-scrollbar "
-        ref={containterRef}
+        ref={containerRef}
+        className="h-full overflow-auto lg:flex no-scrollbar"
       >
-        {/* Text Containter */}
-        <div className="p-4 sm:p-8 md:p-12 lg:p-20 xl:p-48 flex flex-col gap-24 md:gap-34 lg:gap-48 xl:gap-64 lg:w-2/3 xl:1/2  ">
-          {/* Biblography Containter */}
-          <div className="flex flex-col gap-12 justify-center">
+        {/* LEFT: TEXT COLUMN */}
+        <div className="p-4 sm:p-8 md:p-12 lg:p-20 xl:p-48 flex flex-col gap-24 md:gap-34 lg:gap-48 xl:gap-64 lg:w-2/3 xl:1/2">
+          {/* BIO */}
+          <section className="flex flex-col gap-6 justify-center">
             <h1 className="font-bold text-2xl">Biblography</h1>
             <p className="text-lg font-normal italic">
               I’m Abdur Rehman Malik, a Web Developer and B.Tech student at DTU,
@@ -42,382 +66,364 @@ const AboutPage = () => {
               </span>
               . Always learning, always building!
             </p>
-            <h2 className="italic font-bold text-lg">
-              Scroll Down For Education & Experience Section
-            </h2>
-            <div className="">
+
+            <div className="pt-2">
               <motion.svg
                 initial={{ opacity: 0.2, y: 0 }}
                 animate={{ opacity: 1, y: "10px" }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2,
-                  ease: "easeInOut",
-                }}
+                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                 viewBox="0 0 24 24"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                width={50}
-                height={50}
+                width={42}
+                height={42}
+                aria-hidden
               >
                 <path
                   d="M5 15C5 16.8565 5.73754 18.6371 7.05029 19.9498C8.36305 21.2626 10.1435 21.9999 12 21.9999C13.8565 21.9999 15.637 21.2626 16.9498 19.9498C18.2625 18.6371 19 16.8565 19 15V9C19 7.14348 18.2625 5.36305 16.9498 4.05029C15.637 2.73754 13.8565 2 12 2C10.1435 2 8.36305 2.73754 7.05029 4.05029C5.73754 5.36305 5 7.14348 5 9V15Z"
-                  stroke="#000000"
+                  stroke="#000"
                   strokeWidth="1"
-                ></path>
-                <path d="M12 6V14" stroke="#000000" strokeWidth="1"></path>
-                <path
-                  d="M15 11L12 14L9 11"
-                  stroke="#000000"
-                  strokeWidth="1"
-                ></path>
+                />
+                <path d="M12 6V14" stroke="#000" strokeWidth="1" />
+                <path d="M15 11L12 14L9 11" stroke="#000" strokeWidth="1" />
               </motion.svg>
             </div>
-          </div>
-          {/* Skills Containter */}
-          <div className="flex flex-col gap-12 justify-center" ref={skillRef}>
-            {/* SKILL TITLE */}
-            <motion.h1
-              initial={{ x: "-300px" }}
-              animate={isSkillRefInView ? { x: 0 } : {}}
-              transition={{ delay: 0.2 }}
+          </section>
+
+          {/* SKILLS */}
+          <section className="flex flex-col gap-6 justify-center">
+            <motion.h2
+              {...blockAnim}
               className="font-bold text-2xl"
             >
               SKILLS
-            </motion.h1>
-            <div className="flex gap-4 flex-wrap">
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                HTML
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                CSS
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                JavaScript
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                Node Js
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                Express JS
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                Tailwind
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                React
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                NEXT js
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                C
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                C++
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                Framer Motion
-              </div>
-              <div className="rounded-lg text-sm p-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white ">
-                MongoDB
-              </div>
-            </div>
-            <div>
-              <motion.svg
-                initial={{ opacity: 0.2, y: 0 }}
-                animate={{ opacity: 1, y: "10px" }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2,
-                  ease: "easeInOut",
-                }}
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                width={50}
-                height={50}
-              >
-                <path
-                  d="M5 15C5 16.8565 5.73754 18.6371 7.05029 19.9498C8.36305 21.2626 10.1435 21.9999 12 21.9999C13.8565 21.9999 15.637 21.2626 16.9498 19.9498C18.2625 18.6371 19 16.8565 19 15V9C19 7.14348 18.2625 5.36305 16.9498 4.05029C15.637 2.73754 13.8565 2 12 2C10.1435 2 8.36305 2.73754 7.05029 4.05029C5.73754 5.36305 5 7.14348 5 9V15Z"
-                  stroke="#000000"
-                  strokeWidth="1"
-                ></path>
-                <path d="M12 6V14" stroke="#000000" strokeWidth="1"></path>
-                <path
-                  d="M15 11L12 14L9 11"
-                  stroke="#000000"
-                  strokeWidth="1"
-                ></path>
-              </motion.svg>
-            </div>
-          </div>
-          {/* Education Containter */}
-          <div
-            className="flex flex-col gap-12 justify-center pb-48 "
-            ref={experienceRef}
-          >
-            {/* Education TITLE */}
-            <motion.h1
-              initial={{ x: "-300px" }}
-              animate={isExperienceRefInView ? { x: "0" } : {}}
-              transition={{ delay: 0.2 }}
+            </motion.h2>
+
+            <motion.div
+              {...blockAnim}
+              className="flex gap-3 flex-wrap"
+            >
+              {[
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "Node Js",
+                "Express JS",
+                "Tailwind",
+                "React",
+                "NEXT js",
+                "C",
+                "C++",
+                "Framer Motion",
+                "MongoDB",
+              ].map((s) => (
+                <span
+                  key={s}
+                  className="rounded-lg text-sm px-3 py-2 cursor-pointer text-white bg-black hover:text-black hover:bg-white border border-black/10 transition-colors"
+                >
+                  {s}
+                </span>
+              ))}
+            </motion.div>
+          </section>
+
+          {/* EDUCATION — Animated Timeline */}
+          <section className="flex flex-col gap-8 justify-center">
+            <motion.h2
+              {...blockAnim}
               className="font-bold text-2xl"
             >
               Education
-            </motion.h1>
-            {/* Education List */}
-            <div className="">
-              {/* Items*/}
-              <div
-                className="flex justify-between h-52
-                "
-              >
-                {/*Left */}
-                <div className="w-1/2 ">
-                  {/* Title */}
+            </motion.h2>
 
-                  <div className="bg-white p-3 font-semibold rounded-b-lg rounded-s-lg">
-                    {" "}
-                    Delhi Technological University{" "}
-                  </div>
-                  <div className="text-xs p-1 mt-1  italic bg-gray-700 text-white rounded-b-lg rounded-s-lg">
-                    New Delhi,India
-                  </div>
-                  {/* Location */}
+            <div className="space-y-10">
+              {/* ITEM 1 — DTU (Left) */}
+              <div className="flex justify-between lg:h-56">
+                {/* Left Card */}
+                <motion.article
+                  {...blockAnim}
+                  className="w-full lg:w-1/2"
+                >
+                  <div className={cardBase}>
+                    {/* Glow ring */}
+                    <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#b3d4fc]/30 via-[#d6c8e5]/30 to-[#f3c6c6]/30 blur-xl" />
+                    <div className="relative p-5">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                        <h3 className="font-extrabold text-lg text-gray-900">
+                          Delhi Technological University
+                        </h3>
+                        <span className="text-sm font-semibold text-red-500 mt-1 sm:mt-0">
+                          Nov 2022 — Aug 2026
+                        </span>
+                      </div>
 
-                  <div className="text-sm p-3 font-semibold ">
-                    Bachelors of Technology in Electronics & Communication
-                    Engineering (ECE)
+                      <p className="text-xs mt-1 italic text-gray-600">
+                        📍 New Delhi, India
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <span className={`${badge} bg-indigo-100 text-indigo-800`}>
+                          🎓 B.Tech
+                        </span>
+                        <span className={`${badge} bg-purple-100 text-purple-800`}>
+                          📡 Electronics & Communication Engineering
+                        </span>
+                      </div>
+
+                      <div className="mt-3 flex flex-wrap gap-3">
+                        <span className={`${badge} bg-blue-100 text-blue-800 font-medium`}>
+                          Minor: Computer Science & Engineering
+                        </span>
+                        <span className={`${badge} bg-green-100 text-green-800 font-bold`}>
+                          CGPA: 8.15/10{" "}
+                          <span className="text-gray-600 font-normal">
+                            (till 6th sem)
+                          </span>
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-sm p-3 ">
-                    <p className="font-semibold">Minor Specialty: </p>
-                    <p className="font-semibold">
-                      {" "}
-                      Computer Science & Engineering
-                    </p>
-                    <p className="font-semibold">
-                      CGPA: 8.15/10(till 6th semester)
-                    </p>
-                  </div>
-                  {/* DAte */}
-                  <div className="text-sm p-3 text-red-600  font-semibold">
-                    {" "}
-                    Nov,2022 - Aug,2026
-                  </div>
+                </motion.article>
+
+                {/* Timeline Column */}
+                <div className="hidden lg:flex w-12 justify-center">
+                  <motion.div
+                    {...lineAnim}
+                    className="origin-top w-1 h-full bg-gradient-to-b from-red-400 via-gray-500 to-red-400 rounded relative"
+                  >
+                    <div className="absolute -left-2 top-0">{dot}</div>
+                  </motion.div>
                 </div>
 
-                {/*Center*/}
-                <div className="w-1/7 ">
-                  {/* Line */}
-                  <div className="w-1 h-full bg-gray-600 rounded relative">
-                    {/* Circle */}
-                    <div className="absolute w-5 h-5 rounded-full ring-4 ring-red-400 bg-white -left-2"></div>
-                  </div>
-                </div>
-                {/*Right*/}
-                <div className="w-1/3"></div>
+                {/* Right Spacer */}
+                <div className="hidden lg:block w-1/3" />
               </div>
 
-              <div className="flex justify-between h-48">
-                {/*Left */}
-                <div className="w-1/2 "></div>
+              {/* ITEM 2 — Class 12 (Right) */}
+              <div className="flex justify-between lg:h-56">
+                {/* Left Spacer */}
+                <div className="hidden lg:block w-1/2" />
 
-                {/*Center*/}
-                <div className="w-1/7 ">
-                  {/* Line */}
-                  <div className="w-1 h-full bg-gray-600 rounded relative">
-                    {/* Circle */}
-                    <div className="absolute w-5 h-5 rounded-full ring-4 ring-red-400 bg-white -left-2"></div>
-                  </div>
+                {/* Timeline Column */}
+                <div className="hidden lg:flex w-12 justify-center">
+                  <motion.div
+                    {...lineAnim}
+                    className="origin-top w-1 h-full bg-gradient-to-b from-red-400 via-gray-500 to-red-400 rounded relative"
+                  >
+                    <div className="absolute -left-2 top-0">{dot}</div>
+                  </motion.div>
                 </div>
-                {/*Right*/}
-                <div className="w-1/3">
-                  {/* Title */}
 
-                  <div className="bg-white p-3 font-semibold rounded-b-lg rounded-r-lg">
-                    Rajkiya Sarvodaya Bal Vidyalaya
-                  </div>
-                  <div className="text-xs p-1 mt-1  italic bg-gray-700 text-white rounded-b-lg rounded-r-lg">
-                    Gandhi Nagar, New Delhi
-                  </div>
-                  {/* Location */}
+                {/* Right Card */}
+                <motion.article
+                  {...blockAnim}
+                  className="w-full lg:w-1/3"
+                >
+                  <div className={cardBase}>
+                    <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#b3d4fc]/30 via-[#d6c8e5]/30 to-[#f3c6c6]/30 blur-xl" />
+                    <div className="relative p-5">
+                      <h3 className="font-extrabold text-lg text-gray-900">
+                        Rajkiya Sarvodaya Bal Vidyalaya
+                      </h3>
+                      <p className="text-xs mt-1 italic text-gray-600">
+                        📍 Gandhi Nagar, New Delhi
+                      </p>
 
-                  <div className="text-sm p-3 font-semibold ">
-                    Major Specialty(Class-12th): Physics, Chemistry,
-                    Mathematics, Computer Science ,English
+                      <div className="mt-3">
+                        <p className="text-sm font-semibold">
+                          Major Specialty (Class‑12th):
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {[
+                            "Physics",
+                            "Chemistry",
+                            "Mathematics",
+                            "Computer Science",
+                            "English",
+                          ].map((sub) => (
+                            <span
+                              key={sub}
+                              className={`${badge} bg-blue-100 text-blue-800`}
+                            >
+                              {sub}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mt-3 text-sm font-semibold">
+                        Percentage:{" "}
+                        <span className="bg-red-100 text-red-700 font-bold px-3 py-1 rounded-full shadow-sm border border-red-200">
+                          91%
+                        </span>
+                      </div>
+
+                      <p className="text-sm mt-3 text-red-500 font-semibold">
+                        Apr 2020 — Jun 2021
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-sm p-3 font-semibold">
-                    Percentage : 91%
-                  </div>
-                  {/* DAte */}
-                  <div className="text-sm p-3 text-red-600  font-semibold">
-                    {" "}
-                    Apr,2020 - Jun,2021
-                  </div>
-                </div>
+                </motion.article>
               </div>
 
-              <div className="flex justify-between h-48">
-                {/*Left */}
-                <div className="w-1/2 ">
-                  {/* Title */}
+              {/* ITEM 3 — Class 10 (Left) */}
+              <div className="flex justify-between lg:h-56">
+                {/* Left Card */}
+                <motion.article
+                  {...blockAnim}
+                  className="w-full lg:w-1/2"
+                >
+                  <div className={cardBase}>
+                    <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#b3d4fc]/30 via-[#d6c8e5]/30 to-[#f3c6c6]/30 blur-xl" />
+                    <div className="relative p-5">
+                      <h3 className="font-extrabold text-lg text-gray-900">
+                        Rajkiya Sarvodaya Bal Vidyalaya
+                      </h3>
+                      <p className="text-xs mt-1 italic text-gray-600">
+                        📍 Gandhi Nagar, New Delhi
+                      </p>
 
-                  <div className="bg-white p-3 font-semibold rounded-b-lg rounded-s-lg">
-                    {" "}
-                    Rajkiya Sarvodaya Bal Vidyalaya
-                  </div>
-                  <div className="text-xs p-1 mt-1  italic bg-gray-700 text-white rounded-b-lg rounded-s-lg">
-                    {" "}
-                    Gandhi Nagar, New Delhi
-                  </div>
-                  {/* Location */}
+                      <div className="mt-3">
+                        <p className="text-sm font-semibold">
+                          Major Specialty (Class‑10th):
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {[
+                            "English",
+                            "Hindi",
+                            "Mathematics",
+                            "Science",
+                            "Social Science",
+                            "Sanskrit",
+                          ].map((sub) => (
+                            <span
+                              key={sub}
+                              className={`${badge} bg-blue-100 text-blue-800`}
+                            >
+                              {sub}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
 
-                  <div className="text-sm p-3 font-semibold ">
-                    Major Specialty(Class-10th): English, Hindi,
-                    Mathematics,Science , Social Science, Sanskrit
+                      <div className="mt-3 text-sm font-semibold">
+                        Percentage:{" "}
+                        <span className="bg-red-100 text-red-700 font-bold px-3 py-1 rounded-full shadow-sm border border-red-200">
+                          86.5%
+                        </span>
+                      </div>
+
+                      <p className="text-sm mt-3 text-red-500 font-semibold">
+                        Apr 2018 — Jun 2019
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-sm p-3 font-semibold ">
-                    Percentage : 86.5%
-                  </div>
-                  {/* DAte */}
-                  <div className="text-sm p-3 text-red-600  font-semibold">
-                    {" "}
-                    Apr,2018 - Jun,2019
-                  </div>
+                </motion.article>
+
+                {/* Timeline Column */}
+                <div className="hidden lg:flex w-12 justify-center">
+                  <motion.div
+                    {...lineAnim}
+                    className="origin-top w-1 h-full bg-gradient-to-b from-red-400 via-gray-500 to-red-400 rounded relative"
+                  >
+                    <div className="absolute -left-2 top-0">{dot}</div>
+                  </motion.div>
                 </div>
 
-                {/*Center*/}
-                <div className="w-1/7 ">
-                  {/* Line */}
-                  <div className="w-1 h-full bg-gray-600 rounded relative">
-                    {/* Circle */}
-                    <div className="absolute w-5 h-5 rounded-full ring-4 ring-red-400 bg-white -left-2"></div>
-                  </div>
-                </div>
-                {/*Right*/}
-                <div className="w-1/3"></div>
+                {/* Right Spacer */}
+                <div className="hidden lg:block w-1/3" />
               </div>
             </div>
-          </div>
-          {/* 
+          </section>
 
-          {/* Experience Containter */}
-          <div
-            className="flex flex-col gap-12 justify-center pb-48"
-            ref={workRef}
-          >
-            {/* EXPERIENCE TITLE */}
-            <motion.h1
-              initial={{ x: "-300px" }}
-              animate={isWorkRefInView ? { x: "0" } : {}}
-              transition={{ delay: 0.2 }}
+          {/* EXPERIENCE — Animated Timeline */}
+          <section className="flex flex-col gap-8 justify-center">
+            <motion.h2
+              {...blockAnim}
               className="font-bold text-2xl"
             >
               Experience
-            </motion.h1>
+            </motion.h2>
 
-            {/* Experience List */}
-            <div>
-              {/* Exp 1 - Left */}
-              <div className="flex justify-between h-52">
-                {/* Left */}
-                <div className="w-1/2">
-                  <div className="bg-white p-3 font-semibold rounded-b-lg rounded-s-lg">
-                    Full Stack Developer Intern — Zidio Development
+            <div className="space-y-10">
+              {/* EXP 1 — Left */}
+              <div className="flex justify-between lg:h-48">
+                <motion.article
+                  {...blockAnim}
+                  className="w-full lg:w-1/2"
+                >
+                  <div className={cardBase}>
+                    <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#b3d4fc]/30 via-[#d6c8e5]/30 to-[#f3c6c6]/30 blur-xl" />
+                    <div className="relative p-5">
+                      <h3 className="font-extrabold text-lg">
+                        Full Stack Developer Intern — Zidio Development
+                      </h3>
+                      <p className="text-xs mt-1 italic text-gray-600">
+                        Remote / Bengaluru, India
+                      </p>
+                      <p className="text-sm mt-3">
+                        Built a full‑stack web app for uploading, analyzing, and
+                        visualizing Excel files with interactive chart generation.
+                      </p>
+                      <p className="text-sm mt-3 text-red-500 font-semibold">
+                        Jun 2025 — Aug 2025
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-xs p-1 mt-1 italic bg-gray-700 text-white rounded-b-lg rounded-s-lg">
-                    Remote / Bengaluru, India
-                  </div>
-                  <div className="text-sm p-3 font-semibold">
-                    Built features with Next.js, Tailwind, and Node.js; improved
-                    performance and created reusable UI components.
-                  </div>
-                  <div className="text-sm p-3 text-red-600 font-semibold">
-                    Jun, 2025 — Aug, 2025
-                  </div>
+                </motion.article>
+
+                <div className="hidden lg:flex w-12 justify-center">
+                  <motion.div
+                    {...lineAnim}
+                    className="origin-top w-1 h-full bg-gradient-to-b from-red-400 via-gray-500 to-red-400 rounded relative"
+                  >
+                    <div className="absolute -left-2 top-0">{dot}</div>
+                  </motion.div>
                 </div>
 
-                {/* Center */}
-                <div className="w-1/7">
-                  <div className="w-1 h-full bg-gray-600 rounded relative">
-                    <div className="absolute w-5 h-5 rounded-full ring-4 ring-red-400 bg-white -left-2"></div>
-                  </div>
-                </div>
-
-                {/* Right */}
-                <div className="w-1/3"></div>
+                <div className="hidden lg:block w-1/3" />
               </div>
 
-              {/* Exp 2 - Right */}
-              <div className="flex justify-between h-48">
-                {/* Left (empty to alternate) */}
-                <div className="w-1/2"></div>
-
-                {/* Center */}
-                <div className="w-1/7">
-                  <div className="w-1 h-full bg-gray-600 rounded relative">
-                    <div className="absolute w-5 h-5 rounded-full ring-4 ring-red-400 bg-white -left-2"></div>
-                  </div>
+              {/* EXP 2 — Right */}
+              <div className="flex justify-between lg:h-44">
+                <div className="hidden lg:block w-1/2" />
+                <div className="hidden lg:flex w-12 justify-center">
+                  <motion.div
+                    {...lineAnim}
+                    className="origin-top w-1 h-full bg-gradient-to-b from-red-400 via-gray-500 to-red-400 rounded relative"
+                  >
+                    <div className="absolute -left-2 top-0">{dot}</div>
+                  </motion.div>
                 </div>
 
-                {/* Right */}
-                <div className="w-1/3">
-                  <div className="bg-white p-3 font-semibold rounded-b-lg rounded-r-lg">
-                    Open Source Contributor — Project/Org
+                <motion.article
+                  {...blockAnim}
+                  className="w-full lg:w-1/3"
+                >
+                  <div className={cardBase}>
+                    <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#b3d4fc]/30 via-[#d6c8e5]/30 to-[#f3c6c6]/30 blur-xl" />
+                    <div className="relative p-5">
+                      <h3 className="font-extrabold text-lg">Edunet Foundation</h3>
+                      <p className="text-xs mt-1 italic text-gray-600">Remote</p>
+                      <p className="text-sm mt-3">
+                        Developed an AI healthcare chatbot using Python,
+                        scikit‑learn, and Hugging Face Transformers.
+                      </p>
+                      <p className="text-sm mt-3 text-red-500 font-semibold">
+                        Jan 2025 — Feb 2025
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-xs p-1 mt-1 italic bg-gray-700 text-white rounded-b-lg rounded-r-lg">
-                    GitHub
-                  </div>
-                  <div className="text-sm p-3 font-semibold">
-                    Contributed to issues & PRs; fixed bugs, improved docs, and
-                    shipped features in React/JS tools.
-                  </div>
-                  <div className="text-sm p-3 text-red-600 font-semibold">
-                    Jan, 2025 — Present
-                  </div>
-                </div>
-              </div>
-
-              {/* Exp 3 - Left */}
-              <div className="flex justify-between h-48">
-                {/* Left */}
-                <div className="w-1/2">
-                  <div className="bg-white p-3 font-semibold rounded-b-lg rounded-s-lg">
-                    Freelance Web Developer — Client Name
-                  </div>
-                  <div className="text-xs p-1 mt-1 italic bg-gray-700 text-white rounded-b-lg rounded-s-lg">
-                    Remote
-                  </div>
-                  <div className="text-sm p-3 font-semibold">
-                    Delivered a responsive SPA with auth, payments, and CMS
-                    integration; improved Lighthouse scores.
-                  </div>
-                  <div className="text-sm p-3 text-red-600 font-semibold">
-                    Sep, 2024 — Dec, 2024
-                  </div>
-                </div>
-
-                {/* Center */}
-                <div className="w-1/7">
-                  <div className="w-1 h-full bg-gray-600 rounded relative">
-                    <div className="absolute w-5 h-5 rounded-full ring-4 ring-red-400 bg-white -left-2"></div>
-                  </div>
-                </div>
-
-                {/* Right */}
-                <div className="w-1/3"></div>
+                </motion.article>
               </div>
             </div>
-          </div>
+          </section>
         </div>
-        {/* SVG Containter */}
-        <div className="hidden lg:block w-1/3 xl:1/2 sticky top-0 z-30 ">
+
+        {/* RIGHT: BRAIN CANVAS */}
+        <div className="hidden lg:block w-1/3 xl:1/2 sticky top-0 z-30">
           <Brain scrollYProgress={scrollYProgress} />
         </div>
       </div>
     </motion.div>
   );
-};
-
-export default AboutPage;
+}

@@ -5,6 +5,8 @@ import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import Image from "next/image";
 import { Code2, Github, Linkedin, Mail } from "lucide-react";
+import Link from "next/link";
+
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -281,13 +283,21 @@ export default function ContactPage() {
             <a href="/about" className="hover:text-black transition-colors">
               About
             </a>
-            <a href="/projects" className="hover:text-black transition-colors">
+            <Link
+              href="/portfolio"
+              className="hover:text-black transition-colors"
+            >
               Projects
-            </a>
+            </Link>
             <a href="/contact" className="hover:text-black transition-colors">
               Contact
             </a>
-            <a href="/resume" className="hover:text-black transition-colors">
+            <a
+              href="https://drive.google.com/file/d/1PAkRpRjK2TadRJOMHVEPRlvoXb3hk4MX/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-black transition-colors"
+            >
               Resume
             </a>
           </div>

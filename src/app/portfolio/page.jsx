@@ -34,7 +34,7 @@ const projects = [
   {
     id: 2,
     title: "Concise AI - AI Article Summarizer",
-    img: "/Concise_Ai.png",
+    img: "/Concise_AI.png",
     bullets: [
       "Developed a Chrome extension to summarize online articles using Gemini API.",
       "Implemented 3 summary modes (brief, detailed, bullet points), enhancing user flexibility",
