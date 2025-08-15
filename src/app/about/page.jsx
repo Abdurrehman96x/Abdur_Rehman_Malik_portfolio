@@ -63,7 +63,7 @@ const skills = [
   "Express JS",
   "Tailwind",
   "React",
-  "NEXT js",
+  "Next Js",
   "C",
   "C++",
   "Python",
@@ -74,6 +74,7 @@ const skills = [
   "Postman",
   "Vercel",
 ];
+
 const skillIcons = {
   html: FaHtml5,
   css: FaCss3Alt,
@@ -95,23 +96,6 @@ const skillIcons = {
   vercel: SiVercel,
 };
 
-const SkillPill = ({ label }) => (
-  <span
-    className="
-      group inline-flex items-center gap-2 rounded-xl text-sm px-3 py-2
-      cursor-default text-white bg-black/90 border border-black/10
-      hover:bg-white hover:text-black transition-all duration-200
-      shadow-[0_6px_18px_-6px_rgba(0,0,0,0.3)] hover:-translate-y-0.5
-    "
-    title={label}
-    aria-label={label}
-  >
-    <span className="inline-flex items-center justify-center w-5 h-5">
-      <SkillIcon name={label} />
-    </span>
-    {label}
-  </span>
-);
 
 export default function AboutPage() {
   const containerRef = useRef(null);
@@ -190,7 +174,6 @@ export default function AboutPage() {
               SKILLS
             </motion.h2>
 
-            {/* variants local to this section */}
             {(() => {
               const container = {
                 hidden: { opacity: 0 },
@@ -199,7 +182,6 @@ export default function AboutPage() {
                   transition: { staggerChildren: 0.05, delayChildren: 0.05 },
                 },
               };
-
               const pill = {
                 hidden: { opacity: 0, y: 10, scale: 0.98, rotate: -2 },
                 show: {
@@ -227,34 +209,12 @@ export default function AboutPage() {
                         variants={pill}
                         whileHover={{ y: -3, scale: 1.04, rotate: -1 }}
                         whileTap={{ scale: 0.97 }}
-                        className="relative rounded-lg text-sm px-3 py-2 flex items-center gap-2 cursor-pointer
-                         text-white bg-black border border-black/10 transition-all duration-200
-                         shadow-[0_8px_22px_-10px_rgba(0,0,0,0.35)]"
+                        className="rounded-lg text-sm px-3 py-2 flex items-center gap-2 cursor-pointer
+                         text-white bg-black hover:text-black hover:bg-white border border-black/10
+                         transition-all duration-200 shadow-[0_8px_22px_-10px_rgba(0,0,0,0.35)]"
                       >
-                        {/* subtle shine on hover */}
-                        <span className="pointer-events-none absolute inset-0 rounded-lg overflow-hidden">
-                          <span className="absolute -inset-x-1 -top-1 h-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </span>
-
-                        {Icon && (
-                          <motion.span
-                            aria-hidden
-                            className="inline-flex"
-                            whileHover={{ rotate: -6 }}
-                            transition={{
-                              type: "spring",
-                              stiffness: 300,
-                              damping: 15,
-                            }}
-                          >
-                            <Icon size={16} />
-                          </motion.span>
-                        )}
-
-                        <span className="relative z-10">{skill}</span>
-
-                        {/* invert colors on hover */}
-                        <span className="absolute inset-0 rounded-lg pointer-events-none transition-colors duration-200 hover:bg-white/100 hover:text-black" />
+                        {Icon && <Icon size={16} aria-hidden />}
+                        {skill}
                       </motion.span>
                     );
                   })}
