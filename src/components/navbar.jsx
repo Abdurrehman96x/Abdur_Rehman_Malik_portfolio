@@ -10,7 +10,7 @@ const links = [
   { url: "/about", title: "About" },
   { url: "/portfolio", title: "Projects" },
   { url: "/contact", title: "Contact" },
-  { url: "https://drive.google.com/file/d/1PAkRpRjK2TadRJOMHVEPRlvoXb3hk4MX/view?usp=drive_link", title: "Resume" },
+  { url: "https://drive.google.com/file/d/1BS48bzJMD2IcljzTmeaZUQ9TCmSYeeRl/view?usp=drive_link", title: "Resume" },
 ];
 
 const Navbar = () => {
