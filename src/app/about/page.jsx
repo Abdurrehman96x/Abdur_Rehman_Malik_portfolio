@@ -2,11 +2,12 @@
 
 import Brain from "@/components/brain";
 import { motion, useScroll } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
 const cardBase =
   "relative rounded-2xl border border-black/10 bg-white/70 backdrop-blur-md shadow-[0_20px_60px_-20px_rgba(0,0,0,0.2)] " +
-  "hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.35)] hover:-translate-y-0.5 transition-all duration-300";
+  "hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.35)] hover:-translate-y-1.5 transition-all duration-300";
 
 const badge =
   "px-3 py-1 rounded-full text-xs font-semibold shadow-sm border border-black/10";
@@ -67,11 +68,27 @@ export default function AboutPage() {
               . Always learning, always building!
             </p>
 
+            {/* Signature PNG */}
+            <div className="pt-2">
+              <Image
+                src="/sign.png" 
+                alt="Signature of Abdur Rehman Malik"
+                width={250}
+                height={150}
+                className="object-contain"
+              />
+            </div>
+
+            {/* Down Arrow */}
             <div className="pt-2">
               <motion.svg
                 initial={{ opacity: 0.2, y: 0 }}
                 animate={{ opacity: 1, y: "10px" }}
-                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2,
+                  ease: "easeInOut",
+                }}
                 viewBox="0 0 24 24"
                 fill="none"
                 width={42}
@@ -91,17 +108,11 @@ export default function AboutPage() {
 
           {/* SKILLS */}
           <section className="flex flex-col gap-6 justify-center">
-            <motion.h2
-              {...blockAnim}
-              className="font-bold text-2xl"
-            >
+            <motion.h2 {...blockAnim} className="font-bold text-2xl">
               SKILLS
             </motion.h2>
 
-            <motion.div
-              {...blockAnim}
-              className="flex gap-3 flex-wrap"
-            >
+            <motion.div {...blockAnim} className="flex gap-3 flex-wrap">
               {[
                 "HTML",
                 "CSS",
@@ -128,10 +139,7 @@ export default function AboutPage() {
 
           {/* EDUCATION — Animated Timeline */}
           <section className="flex flex-col gap-8 justify-center">
-            <motion.h2
-              {...blockAnim}
-              className="font-bold text-2xl"
-            >
+            <motion.h2 {...blockAnim} className="font-bold text-2xl">
               Education
             </motion.h2>
 
@@ -139,10 +147,7 @@ export default function AboutPage() {
               {/* ITEM 1 — DTU (Left) */}
               <div className="flex justify-between lg:h-56">
                 {/* Left Card */}
-                <motion.article
-                  {...blockAnim}
-                  className="w-full lg:w-1/2"
-                >
+                <motion.article {...blockAnim} className="w-full lg:w-1/2">
                   <div className={cardBase}>
                     {/* Glow ring */}
                     <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#b3d4fc]/30 via-[#d6c8e5]/30 to-[#f3c6c6]/30 blur-xl" />
@@ -161,19 +166,27 @@ export default function AboutPage() {
                       </p>
 
                       <div className="mt-3 flex flex-wrap gap-2">
-                        <span className={`${badge} bg-indigo-100 text-indigo-800`}>
+                        <span
+                          className={`${badge} bg-indigo-100 text-indigo-800`}
+                        >
                           🎓 B.Tech
                         </span>
-                        <span className={`${badge} bg-purple-100 text-purple-800`}>
+                        <span
+                          className={`${badge} bg-purple-100 text-purple-800`}
+                        >
                           📡 Electronics & Communication Engineering
                         </span>
                       </div>
 
                       <div className="mt-3 flex flex-wrap gap-3">
-                        <span className={`${badge} bg-blue-100 text-blue-800 font-medium`}>
+                        <span
+                          className={`${badge} bg-blue-100 text-blue-800 font-medium`}
+                        >
                           Minor: Computer Science & Engineering
                         </span>
-                        <span className={`${badge} bg-green-100 text-green-800 font-bold`}>
+                        <span
+                          className={`${badge} bg-green-100 text-green-800 font-bold`}
+                        >
                           CGPA: 8.15/10{" "}
                           <span className="text-gray-600 font-normal">
                             (till 6th sem)
@@ -214,10 +227,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Right Card */}
-                <motion.article
-                  {...blockAnim}
-                  className="w-full lg:w-1/3"
-                >
+                <motion.article {...blockAnim} className="w-full lg:w-1/3">
                   <div className={cardBase}>
                     <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#b3d4fc]/30 via-[#d6c8e5]/30 to-[#f3c6c6]/30 blur-xl" />
                     <div className="relative p-5">
@@ -268,10 +278,7 @@ export default function AboutPage() {
               {/* ITEM 3 — Class 10 (Left) */}
               <div className="flex justify-between lg:h-56">
                 {/* Left Card */}
-                <motion.article
-                  {...blockAnim}
-                  className="w-full lg:w-1/2"
-                >
+                <motion.article {...blockAnim} className="w-full lg:w-1/2">
                   <div className={cardBase}>
                     <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#b3d4fc]/30 via-[#d6c8e5]/30 to-[#f3c6c6]/30 blur-xl" />
                     <div className="relative p-5">
@@ -337,20 +344,14 @@ export default function AboutPage() {
 
           {/* EXPERIENCE — Animated Timeline */}
           <section className="flex flex-col gap-8 justify-center">
-            <motion.h2
-              {...blockAnim}
-              className="font-bold text-2xl"
-            >
+            <motion.h2 {...blockAnim} className="font-bold text-2xl">
               Experience
             </motion.h2>
 
             <div className="space-y-10">
               {/* EXP 1 — Left */}
               <div className="flex justify-between lg:h-48">
-                <motion.article
-                  {...blockAnim}
-                  className="w-full lg:w-1/2"
-                >
+                <motion.article {...blockAnim} className="w-full lg:w-1/2">
                   <div className={cardBase}>
                     <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#b3d4fc]/30 via-[#d6c8e5]/30 to-[#f3c6c6]/30 blur-xl" />
                     <div className="relative p-5">
@@ -362,7 +363,8 @@ export default function AboutPage() {
                       </p>
                       <p className="text-sm mt-3">
                         Built a full‑stack web app for uploading, analyzing, and
-                        visualizing Excel files with interactive chart generation.
+                        visualizing Excel files with interactive chart
+                        generation.
                       </p>
                       <p className="text-sm mt-3 text-red-500 font-semibold">
                         Jun 2025 — Aug 2025
@@ -395,15 +397,16 @@ export default function AboutPage() {
                   </motion.div>
                 </div>
 
-                <motion.article
-                  {...blockAnim}
-                  className="w-full lg:w-1/3"
-                >
+                <motion.article {...blockAnim} className="w-full lg:w-1/3">
                   <div className={cardBase}>
                     <div className="pointer-events-none absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#b3d4fc]/30 via-[#d6c8e5]/30 to-[#f3c6c6]/30 blur-xl" />
                     <div className="relative p-5">
-                      <h3 className="font-extrabold text-lg">Edunet Foundation</h3>
-                      <p className="text-xs mt-1 italic text-gray-600">Remote</p>
+                      <h3 className="font-extrabold text-lg">
+                        Edunet Foundation
+                      </h3>
+                      <p className="text-xs mt-1 italic text-gray-600">
+                        Remote
+                      </p>
                       <p className="text-sm mt-3">
                         Developed an AI healthcare chatbot using Python,
                         scikit‑learn, and Hugging Face Transformers.
