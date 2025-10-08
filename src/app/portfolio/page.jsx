@@ -7,6 +7,35 @@ import Link from "next/link";
 const projects = [
   {
     id: 1,
+    title: "BlogNest",
+    img: "/BlogNest.png",
+    bullets: [
+      "A full-stack blogging platform to create, manage, and share rich-text content with media, likes, comments, and user profiles.",
+      "Developed RESTful APIs using Node.js, Express, and MongoDB for secure data storage and user authentication.",
+      "Integrated Cloudinary to handle secure image uploads (up to 5MB per file) and optimized delivery for faster performance.",
+      "Implemented JWT authentication, role-based access, protected dashboard, and Redux for state management.",
+      "Optimized frontend performance by reducing unnecessary component re-renders by ~30% and ensured responsive design across devices.",
+      "Created an admin dashboard to manage users, monitor content, and block accounts when necessary.",
+    ],
+    tags: [
+      "React.js",
+      "Node.js",
+      "Vite",
+      "Express.js",
+      "MongoDB",
+      "Tailwind CSS",
+      "JWT",
+      "CKEditor",
+      "Redux",
+      "Cloudinary",
+      "Vercel",
+    ],
+    live: "https://blog-nest-frontend-git-master-abdurrehman96xs-projects.vercel.app/",
+    github: "https://github.com/Abdurrehman96x/BlogNest",
+    details: "/projects/blognest",
+  },
+  {
+    id: 2,
     title: "Excel Analytics",
     img: "/Excel_analytics.png",
     bullets: [
@@ -29,10 +58,10 @@ const projects = [
     ],
     live: "https://excel-analytics-arm.vercel.app/",
     github: "https://github.com/Abdurrehman96x/Excel_Analytics_Mern",
-    details: "/projects/solanaforge",
+    details: "/projects/blognest",
   },
   {
-    id: 2,
+    id: 3,
     title: "Concise AI - AI Article Summarizer",
     img: "/Concise_AI.png",
     bullets: [
@@ -51,10 +80,10 @@ const projects = [
     ],
     live: "https://chromewebstore.google.com/detail/concise-ai/mnbijdkdbjnpanmbfnjmkidpciakloea",
     github: "https://github.com/Abdurrehman96x/Concise-AI",
-    details: "/projects/react-commerce",
+    details: "/projects/blognest",
   },
   {
-    id: 3,
+    id: 4,
     title: "Real Track",
     img: "/Real_track.png",
     bullets: [
@@ -63,16 +92,10 @@ const projects = [
       "Leafletjs library provides Interactive	maps to show user locations .",
       "Provided turn-by-turn directions on an interactive map for easy navigation.",
     ],
-    tags: [
-      "Node.js",
-      "Javascript",
-      "Express.js",
-      "Socket	io",
-      "Leaflet Js",
-    ],
+    tags: ["Node.js", "Javascript", "Express.js", "Socket	io", "Leaflet Js"],
     live: "https://realtrack.onrender.com/",
     github: "https://github.com/Abdurrehman96x/RealTrack",
-    details: "/projects/solanaforge",
+    details: "/projects/blognest",
   },
 ];
 
